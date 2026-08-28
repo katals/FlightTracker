@@ -1,0 +1,225 @@
+{
+  "generated_at": "2026-08-25T19:26:11.760768+00:00",
+  "source": "/home/jcarlosmt00/perfilamiento/bts_flights_corregido.csv",
+  "row_count": 544003,
+  "column_count": 13,
+  "duplicate_rows": 0,
+  "duplicate_row_pct": 0.0,
+  "null_summary": {
+    "FL_DATE": {
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    "OP_CARRIER": {
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    "OP_CARRIER_FL_NUM": {
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    "ORIGIN": {
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    "DEST": {
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    "DEP_TIME": {
+      "null_count": 25164,
+      "null_pct": 4.6257
+    },
+    "DEP_DELAY": {
+      "null_count": 25229,
+      "null_pct": 4.6377
+    },
+    "ARR_TIME": {
+      "null_count": 25838,
+      "null_pct": 4.7496
+    },
+    "ARR_DELAY": {
+      "null_count": 26781,
+      "null_pct": 4.923
+    },
+    "CANCELLED": {
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    "CANCELLATION_CODE": {
+      "null_count": 518368,
+      "null_pct": 95.2877
+    },
+    "AIR_TIME": {
+      "null_count": 26781,
+      "null_pct": 4.923
+    },
+    "DISTANCE": {
+      "null_count": 0,
+      "null_pct": 0.0
+    }
+  },
+  "date_min": "2026-01-01",
+  "date_max": "2026-01-31",
+  "carriers": {
+    "distinct": 13,
+    "top_10": [
+      [
+        "WN",
+        104002
+      ],
+      [
+        "DL",
+        79198
+      ],
+      [
+        "AA",
+        76772
+      ],
+      [
+        "OO",
+        66168
+      ],
+      [
+        "UA",
+        63781
+      ],
+      [
+        "YX",
+        29572
+      ],
+      [
+        "AS",
+        26436
+      ],
+      [
+        "MQ",
+        24155
+      ],
+      [
+        "OH",
+        19550
+      ],
+      [
+        "B6",
+        18109
+      ]
+    ]
+  },
+  "origins": {
+    "distinct": 341,
+    "top_10": [
+      [
+        "ORD",
+        25131
+      ],
+      [
+        "ATL",
+        24595
+      ],
+      [
+        "DEN",
+        24484
+      ],
+      [
+        "DFW",
+        24229
+      ],
+      [
+        "PHX",
+        16564
+      ],
+      [
+        "LAX",
+        14815
+      ],
+      [
+        "CLT",
+        14222
+      ],
+      [
+        "MCO",
+        13786
+      ],
+      [
+        "LAS",
+        13695
+      ],
+      [
+        "SEA",
+        11927
+      ]
+    ]
+  },
+  "destinations": {
+    "distinct": 342,
+    "top_10": [
+      [
+        "ORD",
+        25119
+      ],
+      [
+        "ATL",
+        24590
+      ],
+      [
+        "DEN",
+        24485
+      ],
+      [
+        "DFW",
+        24229
+      ],
+      [
+        "PHX",
+        16565
+      ],
+      [
+        "LAX",
+        14811
+      ],
+      [
+        "CLT",
+        14228
+      ],
+      [
+        "MCO",
+        13795
+      ],
+      [
+        "LAS",
+        13709
+      ],
+      [
+        "SEA",
+        11933
+      ]
+    ]
+  },
+  "invalid_iata": {
+    "carrier_codes": 0,
+    "origin_codes": 0,
+    "destination_codes": 0
+  },
+  "invalid_date_rows": 0,
+  "cancelled_distribution": {
+    "0": 518368,
+    "1": 25635
+  },
+  "dep_delay_distribution": {
+    "count": 518774,
+    "min": -59.0,
+    "p50": -2.0,
+    "p95": 86.0,
+    "max": 3339.0,
+    "mean": 13.0965
+  },
+  "arr_delay_distribution": {
+    "count": 517222,
+    "min": -85.0,
+    "p50": -7.0,
+    "p95": 86.0,
+    "max": 3339.0,
+    "mean": 6.4104
+  }
+}

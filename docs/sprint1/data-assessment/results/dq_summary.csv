@@ -1,0 +1,5 @@
+dataset,row_count,completeness,validity,uniqueness,consistency,accuracy_proxy,dq_score
+bts,544003,0.9083,1.0,1.0,1.0,1.0,0.9725
+openflights_airlines,6162,0.2493,0.9969,0.7298,0.9969,1.0,0.7195
+openflights_airports,7698,1.0,0.9999,1.0,0.9999,1.0,0.9999
+opensky,0,1.0,1.0,1.0,1.0,1.0,1.0

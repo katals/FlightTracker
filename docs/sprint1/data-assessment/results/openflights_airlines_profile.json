@@ -1,0 +1,8 @@
+{
+  "generated_at": "2026-08-25T19:26:13.595808+00:00",
+  "source": "https://raw.githubusercontent.com/jpatokal/openflights/master/data/airlines.dat",
+  "row_count": 6162,
+  "duplicate_iata": 415,
+  "null_iata": 4626,
+  "invalid_iata_format": 19
+}

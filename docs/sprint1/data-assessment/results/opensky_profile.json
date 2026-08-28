@@ -1,0 +1,10 @@
+{
+  "generated_at": "2026-08-25T19:26:13.785669+00:00",
+  "source": "/home/jcarlosmt00/perfilamiento/opensky_sample.json",
+  "states": 0,
+  "null_longitude": 0,
+  "null_latitude": 0,
+  "null_callsign": 0,
+  "duplicate_icao24": 0,
+  "timestamp_freshness_seconds": null
+}

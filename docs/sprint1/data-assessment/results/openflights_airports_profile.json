@@ -1,0 +1,9 @@
+{
+  "generated_at": "2026-08-25T19:26:13.782911+00:00",
+  "source": "https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat",
+  "row_count": 7698,
+  "duplicate_iata": 0,
+  "null_lat_lon": 0,
+  "invalid_iata_format": 1,
+  "invalid_coordinate_ranges": 0
+}

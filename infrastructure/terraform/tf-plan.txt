@@ -1,0 +1,85 @@
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [33m~[0m update in-place[0m
+
+Terraform will perform the following actions:
+
+[1m  # google_cloudfunctions2_function.split_and_publish[0m will be updated in-place
+[0m  [33m~[0m[0m resource "google_cloudfunctions2_function" "split_and_publish" {
+        id               = "projects/flighttracker-505314/locations/us-central1/functions/split_and_publish_bts"
+        name             = "split_and_publish_bts"
+        [90m# (12 unchanged attributes hidden)[0m[0m
+
+      [33m~[0m[0m event_trigger {
+          [33m~[0m[0m retry_policy          = "RETRY_POLICY_RETRY" [33m->[0m[0m "RETRY_POLICY_DO_NOT_RETRY"
+            [90m# (5 unchanged attributes hidden)[0m[0m
+
+            [90m# (1 unchanged block hidden)[0m[0m
+        }
+
+      [33m~[0m[0m service_config {
+          [33m~[0m[0m available_memory                 = "512Mi" [33m->[0m[0m "512M"
+            [90m# (16 unchanged attributes hidden)[0m[0m
+        }
+
+        [90m# (1 unchanged block hidden)[0m[0m
+    }
+
+[1m  # google_cloudfunctions2_function.validate_and_persist[0m will be updated in-place
+[0m  [33m~[0m[0m resource "google_cloudfunctions2_function" "validate_and_persist" {
+        id               = "projects/flighttracker-505314/locations/us-central1/functions/validate_and_persist_bts"
+        name             = "validate_and_persist_bts"
+        [90m# (12 unchanged attributes hidden)[0m[0m
+
+      [33m~[0m[0m event_trigger {
+          [33m~[0m[0m retry_policy          = "RETRY_POLICY_RETRY" [33m->[0m[0m "RETRY_POLICY_DO_NOT_RETRY"
+          [33m~[0m[0m trigger_region        = "us-east1" [33m->[0m[0m "us-central1"
+            [90m# (4 unchanged attributes hidden)[0m[0m
+        }
+
+        [90m# (2 unchanged blocks hidden)[0m[0m
+    }
+
+[1m  # google_cloudfunctions2_function.validate_and_store[0m will be updated in-place
+[0m  [33m~[0m[0m resource "google_cloudfunctions2_function" "validate_and_store" {
+      [31m-[0m[0m description      = "Valida y almacena archivos CSV del BTS en RAW" [90m-> null[0m[0m
+        id               = "projects/flighttracker-505314/locations/us-central1/functions/validate_and_store_bts"
+        name             = "validate_and_store_bts"
+        [90m# (11 unchanged attributes hidden)[0m[0m
+
+      [33m~[0m[0m service_config {
+          [33m~[0m[0m max_instance_count               = 10 [33m->[0m[0m 100
+            [90m# (16 unchanged attributes hidden)[0m[0m
+        }
+
+        [90m# (1 unchanged block hidden)[0m[0m
+    }
+
+[1m  # google_sql_database_instance.postgres[0m will be updated in-place
+[0m  [33m~[0m[0m resource "google_sql_database_instance" "postgres" {
+        id                                   = "flighttracker-db"
+        name                                 = "flighttracker-db"
+        [90m# (24 unchanged attributes hidden)[0m[0m
+
+      [33m~[0m[0m settings {
+            [90m# (23 unchanged attributes hidden)[0m[0m
+
+          [33m~[0m[0m ip_configuration {
+              [33m~[0m[0m ssl_mode                                      = "ALLOW_UNENCRYPTED_AND_ENCRYPTED" [33m->[0m[0m "ENCRYPTED_ONLY"
+                [90m# (8 unchanged attributes hidden)[0m[0m
+
+              [31m-[0m[0m authorized_networks {
+                  [31m-[0m[0m name            = "cloudshell" [90m-> null[0m[0m
+                  [31m-[0m[0m value           = "0.0.0.0/0" [90m-> null[0m[0m
+                    [90m# (1 unchanged attribute hidden)[0m[0m
+                }
+            }
+
+            [90m# (4 unchanged blocks hidden)[0m[0m
+        }
+
+        [90m# (1 unchanged block hidden)[0m[0m
+    }
+
+[1mPlan:[0m [0m0 to add, 4 to change, 0 to destroy.
