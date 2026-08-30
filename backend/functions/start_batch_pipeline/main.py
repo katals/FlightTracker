@@ -5,10 +5,11 @@ from google.api_core import exceptions as google_exceptions
 from google.cloud import dataproc_v1
 
 
-PROJECT_ID = os.environ.get("GCP_PROJECT_ID", "flighttracker-505314")
+PROJECT_ID = os.environ.get("GCP_PROJECT_ID", "flighttracker-506923")
 REGION = os.environ.get("GCP_REGION", "us-east1")
-JOB_URI = "gs://flighttracker-scripts/bts_etl.py"
-ZONE = "us-east1-c"
+BUCKET_SCRIPTS = os.environ.get("BUCKET_SCRIPTS", "flighttracker-scripts-506923")
+JOB_URI = os.environ.get("BTS_JOB_URI", f"gs://{BUCKET_SCRIPTS}/bts_etl.py")
+ZONE = os.environ.get("GCP_ZONE", f"{REGION}-c")
 BATCH_JOB_LABEL = "bts-etl"
 BATCH_CLUSTER_NAME = "bts-prod-active"
 ACTIVE_CLUSTER_STATES = {

@@ -124,9 +124,42 @@ ensure_backend_bucket() {
     --uniform-bucket-level-access
 }
 
+# El bucket de zips y el repo de imagenes deben existir ANTES del primer
+# terraform apply: Terraform los referencia como fuente de las funciones y de
+# las imagenes de Cloud Run.
+ensure_function_sources_bucket() {
+  local bucket_uri="gs://${FUNCTION_SOURCES_BUCKET}"
+
+  if gcloud storage buckets describe "${bucket_uri}" --project="${PROJECT_ID}" >/dev/null 2>&1; then
+    log "Function sources bucket already exists: ${bucket_uri}"
+    return 0
+  fi
+
+  log "Creating function sources bucket: ${bucket_uri}"
+  gcloud storage buckets create "${bucket_uri}" \
+    --project="${PROJECT_ID}" \
+    --location="${DATA_REGION}" \
+    --uniform-bucket-level-access
+}
+
+ensure_artifact_registry() {
+  if gcloud artifacts repositories describe "${ARTIFACT_REPO}" \
+    --location="${DATA_REGION}" --project="${PROJECT_ID}" >/dev/null 2>&1; then
+    log "Artifact Registry repo already exists: ${ARTIFACT_REPO}"
+    return 0
+  fi
+
+  log "Creating Artifact Registry repo: ${ARTIFACT_REPO}"
+  gcloud artifacts repositories create "${ARTIFACT_REPO}" \
+    --repository-format=docker \
+    --location="${DATA_REGION}" \
+    --project="${PROJECT_ID}"
+}
+
 enable_required_apis() {
   local services=(
     artifactregistry.googleapis.com
+    bigquery.googleapis.com
     cloudbuild.googleapis.com
     cloudfunctions.googleapis.com
     cloudscheduler.googleapis.com
@@ -153,6 +186,9 @@ PROJECT_ID="${PROJECT_ID:-}"
 DATA_REGION="${DATA_REGION:-${DEFAULT_DATA_REGION}}"
 BATCH_REGION="${BATCH_REGION:-${DEFAULT_BATCH_REGION}}"
 STATE_BUCKET="${STATE_BUCKET:-}"
+BUCKET_SUFFIX="${BUCKET_SUFFIX:-506923}"
+FUNCTION_SOURCES_BUCKET="${FUNCTION_SOURCES_BUCKET:-flighttracker-function-sources-${BUCKET_SUFFIX}}"
+ARTIFACT_REPO="${ARTIFACT_REPO:-flighttracker-functions}"
 STATE_REGION="${STATE_REGION:-}"
 STATE_PREFIX="${STATE_PREFIX:-}"
 
@@ -234,6 +270,8 @@ gcloud config set project "${PROJECT_ID}" >/dev/null
 
 enable_required_apis
 ensure_backend_bucket
+ensure_function_sources_bucket
+ensure_artifact_registry
 
 cat <<EOF
 

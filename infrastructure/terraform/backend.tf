@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "flighttracker-terraform-state-flighttracker-505314"
+    bucket = "flighttracker-tfstate-506923"
     prefix = "terraform/state"
   }
 }

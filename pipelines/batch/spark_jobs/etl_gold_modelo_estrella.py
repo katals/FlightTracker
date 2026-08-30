@@ -25,18 +25,19 @@ from pyspark.sql.functions import (
 from pyspark.sql.types import IntegerType
 
 
-PROJECT_ID = os.environ.get("PROJECT_ID", "flighttracker-505314")
-BUCKET_CURATED = os.environ.get("BUCKET_CURATED", "flighttracker-curated-bts")
+PROJECT_ID = os.environ.get("PROJECT_ID", "flighttracker-506923")
+BUCKET_CURATED = os.environ.get("BUCKET_CURATED", "flighttracker-curated-bts-506923")
+BUCKET_SCRIPTS = os.environ.get("BUCKET_SCRIPTS", "flighttracker-scripts-506923")
 SILVER_PATH = os.environ.get(
     "SILVER_PATH", f"gs://{BUCKET_CURATED}/silver/bts_flights"
 )
 BIGQUERY_DATASET = os.environ.get("BIGQUERY_DATASET", "flighttracker_gold")
 OPENFLIGHTS_PATH = os.environ.get(
-    "OPENFLIGHTS_PATH", "gs://flighttracker-scripts/openflights"
+    "OPENFLIGHTS_PATH", f"gs://{BUCKET_SCRIPTS}/openflights"
 )
-TEMP_BUCKET = os.environ.get(
-    "TEMP_BUCKET", "dataproc-temp-us-east1-310107974919-cz7rmf4e"
-)
+# El bucket temporal de Dataproc del proyecto viejo ya no existe. Se pasa por
+# --properties al enviar el job, o cae al bucket curated del proyecto nuevo.
+TEMP_BUCKET = os.environ.get("TEMP_BUCKET", BUCKET_CURATED)
 
 print("=== Iniciando ETL de Gold (modelo en estrella) ===")
 print(f"Leyendo Silver desde: {SILVER_PATH}")

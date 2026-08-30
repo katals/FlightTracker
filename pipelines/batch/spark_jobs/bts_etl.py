@@ -4,9 +4,9 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, to_date, year, month, dayofmonth, split
 from pyspark.sql.types import IntegerType, BooleanType
 
-PROJECT_ID = os.environ.get("PROJECT_ID", "flighttracker-505314")
-BUCKET_RAW = os.environ.get("BUCKET_RAW", "flighttracker-raw-bts")
-BUCKET_CURATED = os.environ.get("BUCKET_CURATED", "flighttracker-curated-bts")
+PROJECT_ID = os.environ.get("PROJECT_ID", "flighttracker-506923")
+BUCKET_RAW = os.environ.get("BUCKET_RAW", "flighttracker-raw-bts-506923")
+BUCKET_CURATED = os.environ.get("BUCKET_CURATED", "flighttracker-curated-bts-506923")
 DEFAULT_INPUT_OBJECT = "bts/bts_flights_corregido.csv"
 # Sprint 1 runs must ignore test and idempotency copies still present in RAW.
 INPUT_PATH = os.environ.get("BTS_INPUT_PATH", f"gs://{BUCKET_RAW}/{DEFAULT_INPUT_OBJECT}")

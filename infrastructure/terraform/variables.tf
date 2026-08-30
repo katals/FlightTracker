@@ -3,6 +3,12 @@ variable "project_id" {
   type        = string
 }
 
+variable "bucket_suffix" {
+  description = "Sufijo unico para nombres de bucket. Los nombres de GCS son globales y los del proyecto viejo (flighttracker-505314) siguen ocupados."
+  type        = string
+  default     = "506923"
+}
+
 variable "region" {
   description = "Region de GCP"
   type        = string
@@ -40,9 +46,9 @@ variable "pubsub_subscription" {
 }
 
 variable "legacy_push_subscription_enabled" {
-  description = "Keep the legacy push subscription during the idempotency rollout; disable only after Eventarc is verified as the sole consumer."
+  description = "Suscripcion push heredada de Sprint 1. En el proyecto nuevo se arranca en false: el trigger Eventarc de la Gen2 ya crea su propia suscripcion y la duplicada era la causa del drift."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "pubsub_dlq" {
@@ -82,4 +88,58 @@ variable "data_region" {
   description = "Region para datos (buckets y Cloud SQL)"
   type        = string
   default     = "us-central1"
+}
+
+variable "bucket_scripts" {
+  description = "Bucket con los jobs de Spark y los CSV maestros de OpenFlights"
+  type        = string
+  default     = "flighttracker-scripts"
+}
+
+variable "bucket_functions" {
+  description = "Bucket con los zips de las Cloud Functions. Lo crea bootstrap.sh antes del primer apply."
+  type        = string
+  default     = "flighttracker-function-sources"
+}
+
+variable "bigquery_dataset" {
+  description = "Dataset de BigQuery para la capa Gold"
+  type        = string
+  default     = "flighttracker_gold"
+}
+
+variable "bigquery_location" {
+  description = "Ubicacion del dataset de BigQuery"
+  type        = string
+  default     = "US"
+}
+
+variable "firestore_collection" {
+  description = "Coleccion de Firestore usada por el serving batch"
+  type        = string
+  default     = "flights_v1"
+}
+
+variable "artifact_registry_repo" {
+  description = "Repositorio de Artifact Registry con las imagenes de Cloud Run. Lo crea bootstrap.sh."
+  type        = string
+  default     = "flighttracker-functions"
+}
+
+variable "opensky_topic" {
+  description = "Topic de Pub/Sub para estados de OpenSky"
+  type        = string
+  default     = "opensky-states-v1"
+}
+
+variable "opensky_dlq" {
+  description = "Dead-letter topic de OpenSky"
+  type        = string
+  default     = "opensky-states-dlq"
+}
+
+variable "opensky_producer_enabled" {
+  description = "Despliega el productor OpenSky en Cloud Run. Requiere que la imagen exista en Artifact Registry."
+  type        = bool
+  default     = true
 }
