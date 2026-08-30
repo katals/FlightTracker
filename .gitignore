@@ -1,5 +1,46 @@
-__pycache__/
-*.pyc
+# Terraform
+**/.terraform/
+**/*.tfstate
+**/*.tfstate.*
+**/terraform.tfvars
+**/.terraform.lock.hcl
+
+# Datos, binarios y artefactos generados
+**/*.csv
+**/*.zip
+**/*.log
+**/*.swp
+**/*.swo
+**/*.pyc
+**/__pycache__/
+**/**pycache**/
+**/.cache/
 .artifacts/
+
+# Entornos virtuales de Python
 .venv/
 venv/
+**/.venv/
+**/venv/
+
+# Variables de entorno y secretos
+**/.env
+**/.env.*
+**/secrets/
+
+# Archivos grandes BTS y datos de prueba
+**/bts_flights*.csv
+**/test_*.csv
+
+# Configuraciones locales
+**/.vscode/
+**/.idea/
+
+# Comprimidos
+**/*.tar.gz
+**/*.tgz
+
+# Excepcion: resultados de perfilamiento son evidencia de entrega
+!docs/sprint1/data-assessment/results/
+!docs/sprint1/data-assessment/results/*.csv
+!docs/sprint1/data-assessment/results/*.json
