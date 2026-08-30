@@ -158,6 +158,8 @@ ensure_artifact_registry() {
 
 enable_required_apis() {
   local services=(
+    cloudresourcemanager.googleapis.com
+    serviceusage.googleapis.com
     artifactregistry.googleapis.com
     bigquery.googleapis.com
     cloudbuild.googleapis.com
