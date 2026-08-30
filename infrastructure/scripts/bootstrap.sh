@@ -142,6 +142,17 @@ ensure_function_sources_bucket() {
     --uniform-bucket-level-access
 }
 
+# Las service agents de Eventarc y Cloud Storage no existen hasta que el
+# servicio se usa por primera vez. Terraform les asigna roles en el primer
+# apply, asi que hay que forzar su creacion antes.
+ensure_service_agents() {
+  log "Ensuring Eventarc and Cloud Storage service agents exist"
+  gcloud beta services identity create \
+    --service=eventarc.googleapis.com \
+    --project="${PROJECT_ID}" >/dev/null
+  gcloud storage service-agent --project="${PROJECT_ID}" >/dev/null
+}
+
 ensure_artifact_registry() {
   if gcloud artifacts repositories describe "${ARTIFACT_REPO}" \
     --location="${DATA_REGION}" --project="${PROJECT_ID}" >/dev/null 2>&1; then
@@ -274,6 +285,7 @@ enable_required_apis
 ensure_backend_bucket
 ensure_function_sources_bucket
 ensure_artifact_registry
+ensure_service_agents
 
 cat <<EOF
 
