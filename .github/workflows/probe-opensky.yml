@@ -1,0 +1,63 @@
+name: Probe OpenSky connectivity
+
+# Prueba de diagnostico: verifica si un runner de GitHub Actions alcanza
+# OpenSky, que desde GCP responde con timeout TCP.
+# Ver docs/sprint2/evidencias/01-conectividad-opensky-oauth2-y-bloqueo-gcp.md
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Alcanzabilidad de red (sin credenciales)
+        run: |
+          echo "== Resolucion DNS y apertura de puerto 443 =="
+          curl -4 -s -o /dev/null -w "auth: %{http_code} en %{time_total}s\n" \
+            --max-time 30 https://auth.opensky-network.org/ || echo "auth: FALLO"
+          curl -4 -s -o /dev/null -w "api:  %{http_code} en %{time_total}s\n" \
+            --max-time 30 https://opensky-network.org/ || echo "api: FALLO"
+
+      - name: Obtener token OAuth2
+        id: token
+        env:
+          CLIENT_ID: ${{ secrets.OPENSKY_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.OPENSKY_CLIENT_SECRET }}
+        run: |
+          RESP=$(curl -4 -s --max-time 30 -X POST \
+            "https://auth.opensky-network.org/auth/realms/opensky-network/protocol/openid-connect/token" \
+            -d "grant_type=client_credentials" \
+            -d "client_id=${CLIENT_ID}" \
+            -d "client_secret=${CLIENT_SECRET}")
+
+          TOKEN=$(echo "$RESP" | python3 -c \
+            "import sys,json; print(json.load(sys.stdin).get('access_token',''))" 2>/dev/null)
+
+          if [ -z "$TOKEN" ]; then
+            echo "No se obtuvo token. Respuesta cruda (sin secretos):"
+            echo "$RESP" | head -c 300
+            exit 1
+          fi
+
+          echo "Token obtenido: ${TOKEN:0:20}..."
+          echo "::add-mask::$TOKEN"
+          echo "token=$TOKEN" >> "$GITHUB_OUTPUT"
+
+      - name: Consultar estados en vivo
+        env:
+          TOKEN: ${{ steps.token.outputs.token }}
+        run: |
+          # Bounding box pequeno (Suiza) para no gastar creditos de mas.
+          RESP=$(curl -4 -s --max-time 30 -H "Authorization: Bearer $TOKEN" \
+            "https://opensky-network.org/api/states/all?lamin=45.8&lomin=5.9&lamax=47.8&lomax=10.5")
+
+          echo "$RESP" | python3 -c "
+          import sys, json
+          d = json.load(sys.stdin)
+          estados = d.get('states') or []
+          print(f'time      : {d.get(\"time\")}')
+          print(f'estados   : {len(estados)}')
+          for e in estados[:3]:
+              print(f'  icao24={e[0]} callsign={(e[1] or \"\").strip()} lat={e[6]} lon={e[5]}')
+          "
